@@ -8,12 +8,19 @@ import { Component, OnInit, Input } from '@angular/core';
 export class CardsComponent implements OnInit {
 
   @Input() dataEntrante: any;
+
+  public high=Math.round(this.getRandomArbitrary(300,250));
+  public width=Math.round(this.getRandomArbitrary(200,150))
+  
   public image:string | undefined;
 
   constructor() { }
 
   ngOnInit(): void {
-    this.image="https://source.unsplash.com/category/objetos/"
+    this.image="https://picsum.photos/"+this.width+"/"+this.high+""
+  }
+  public getRandomArbitrary(min: number, max: number) {
+    return Math.random() * (max - min) + min;
   }
 
 }

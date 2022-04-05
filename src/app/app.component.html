@@ -1,21 +1,2 @@
-<app-navigation-menu></app-navigation-menu>
-<app-principal></app-principal>
-<section id="productos">
-  <div class="container">
-    <div class="row">
-      <div class="col text-center text-uppercase">
-        <h1>Nuestros Productos</h1>
-        <small>Diseños originales XD</small>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-3 mt-3" 
-      *ngFor="let detalleProducto of listaProductos">
-        <app-cards [dataEntrante]="detalleProducto"></app-cards>
-      </div>
-    </div>
-  </div>
-</section>
-
-<app-footer></app-footer>
+<router-outlet></router-outlet>
 
