@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { RestService } from '../rest.service';
+import { ServicioCarritoService } from '../servicio-carrito.service';
 
 @Component({
   selector: 'app-principal',

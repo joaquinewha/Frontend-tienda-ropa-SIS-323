@@ -9,6 +9,8 @@ import { CardsComponent } from './cards/cards.component';
 import { FooterComponent } from './footer/footer.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ProductDetailsComponent } from './product-details/product-details.component';
+import { ListCarritoComponent } from './list-carrito/list-carrito.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -17,12 +19,14 @@ import { ProductDetailsComponent } from './product-details/product-details.compo
     PrincipalComponent,
     CardsComponent,
     FooterComponent,
-    ProductDetailsComponent
+    ProductDetailsComponent,
+    ListCarritoComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
