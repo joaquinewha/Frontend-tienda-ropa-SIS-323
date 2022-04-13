@@ -19,8 +19,11 @@ export class NavigationMenuComponent implements OnInit {
   constructor(private Carrito:ServicioCarritoService, private formBuilde: FormBuilder, private RestService:RestService) { }
 
   ngOnInit(): void {
-    this.nCarrito = this.Carrito.cantidadProductos('carrito');
-
+    this.nCarrito=this.Carrito.getCache('carrito').length
+    this.Carrito.getObs('carrito').subscribe(carrito=>{
+      console.log(carrito.length)
+      this.nCarrito = carrito.length
+    })
     this.busquedaForm = this.formBuilde.group({
       busqueda: ['',Validators.required]
     });

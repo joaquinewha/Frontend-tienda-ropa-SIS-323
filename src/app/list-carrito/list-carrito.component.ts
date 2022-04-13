@@ -11,6 +11,7 @@ import { Product } from '../models/product';
 export class ListCarritoComponent implements OnInit {
 
   listaProductos: Product[] | undefined
+  total:number | undefined;
 
   public image:string | undefined;
   public high=Math.round(this.getRandomArbitrary(150,149));
@@ -20,8 +21,11 @@ export class ListCarritoComponent implements OnInit {
 
   ngOnInit(): void {
     this.image="https://picsum.photos/"+this.width+"/"+this.high+""
-    this.listaProductos=this.Carrito.getCache('carrito');
-    console.log(this.listaProductos)
+    //this.listaProductos=this.Carrito.getCache('carrito');
+    this.Carrito.getObs('carrito').subscribe(carrito=>{
+      this.listaProductos = carrito
+      this.total=this.costoTotal(this.listaProductos);
+    })
   }
 
   public getRandomArbitrary(min: number, max: number) {
@@ -30,6 +34,13 @@ export class ListCarritoComponent implements OnInit {
 
   deleteData(producto:Product){
     this.Carrito.deleteData('carrito',producto)
+  }
+  costoTotal(productos:Product[]){
+    let total = 0
+    for(let i=0;i<productos.length; i++){
+      total = total + productos[i].cantidad*productos[i].precio
+    }
+    return total;
   }
 
 }

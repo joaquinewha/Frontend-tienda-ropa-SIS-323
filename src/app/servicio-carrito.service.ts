@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Observable, Subject } from 'rxjs';
 
 import { Product } from './models/product';
 
@@ -8,6 +9,7 @@ import { Product } from './models/product';
 export class ServicioCarritoService {
 
   productos: Product[];
+  productos$: Subject<Product[]>;
 
   constructor() { 
     this.productos =[
@@ -20,6 +22,7 @@ export class ServicioCarritoService {
         talla: 'string',
       },*/
     ];
+    this.productos$ = new Subject();
   }
 
   /*getCarrito() {
@@ -33,12 +36,15 @@ export class ServicioCarritoService {
       if(producto == this.productos[i]){
         this.productos.splice(i,1);
         localStorage.setItem(key,JSON.stringify(this.productos))
+        this.productos$.next(this.productos)
       }
     }
   }
 
   setCache(key: string, data:Product){
     this.productos.push(data)
+    this.productos$.next(this.productos)
+
     let productos: Product[]=[];
     if(localStorage.getItem(key)===null){
       productos.push(data)
@@ -76,20 +82,24 @@ export class ServicioCarritoService {
       console.error('Error cleaning localstorage', e)
     }
   }
-  costoTotal(){
-    let total: number = 0
-    for(let i=0;i<this.productos.length; i++){
-      total = total + this.productos[i].precio
+
+  costoTotal(productos:Product[]){
+    let total = 0
+    for(let i=0;i<productos.length; i++){
+      total = total + productos[i].precio
     }
     return total;
   }
-  cantidadProductos(key: string){
+
+  getObs(key: string): Observable<Product[]>{
     if(localStorage.getItem(key)===null){
-      return 0;
+      this.productos$.next(this.productos)
+      return this.productos$.asObservable()
     }
     else{
       this.productos = JSON.parse(''+localStorage.getItem(key));
-      return this.productos.length;
+      this.productos$.next(this.productos)
+      return this.productos$.asObservable()
     }
   }
 }
